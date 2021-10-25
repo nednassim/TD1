@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef LOCAL
+#define debug(format, ...) { printf("[%s",#__VA_ARGS__);printf("] : ") ; printf(format"\n",__VA_ARGS__);}
+#else
+#define debuf(...) 42
+#endif
+
+
 #define BUFFER_SIZE 128
 int main () {
 	FILE *file = fopen("in", "r");                                                                                
@@ -21,6 +28,7 @@ int main () {
 			// l'indexe du mot en str et (l'@ de pos - l'@ str)
 			index = (pos - str) + 1;
 			count ++;
+			debug("%s %i %i", pos, index, count);
 		}
 	}
 
