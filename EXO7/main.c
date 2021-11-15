@@ -4,8 +4,15 @@
 #include <stdbool.h>
 
 int main () {
-	FILE *file1 = fopen("in1", "r");
-	FILE *file2 = fopen("in2", "r");
+	char fichier1[20];
+	printf("Entrer le nom du fichier : ");
+	scanf("%s", fichier1);
+	char fichier2[20];
+	printf("Entrer le nom du fichier : ");
+	scanf("%s", fichier2);
+
+	FILE *file1 = fopen(fichier1, "r");
+	FILE *file2 = fopen(fichier2, "r");
 
 	int diff;
 	int line, col;

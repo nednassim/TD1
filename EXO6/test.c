@@ -13,8 +13,8 @@ typedef struct enregistrement {
 
 int main () {
 	printf("Entrer le nom du fichier : ");
-	char name[6];
-	scanf("%s", name);
+	char fichier[20];
+	scanf("%s", fichier);
 	printf("La liste des options disponibles :\n");
 	printf("		1) Ecrire le fichier\n");
 	printf("		2) Lire le fichier\n");
@@ -23,7 +23,7 @@ int main () {
 	scanf("%i", &option);
 	switch(option) {
 		case 1: {
-			FILE *file = fopen(name, "wb");
+			FILE *file = fopen(fichier, "wb");
 			if (file == NULL) {
 				perror("Impossible d'ouvrir ce fichier\n");
 				exit(0);
@@ -48,25 +48,44 @@ int main () {
 			break;
 		}
 		case 2: {
-			FILE *file1 = fopen(name, "rb");
-			if (file1 == NULL) {
+			FILE *file = fopen(fichier, "rb");
+			if (file == NULL) {
 				perror("Impossible d'ouvrir ce fichier\n");
 				exit(0);
 			}
-			enregistrement enreg1;
+			enregistrement enreg;
 			int i = 1;
 			char ch = '0';
 			while (ch != EOF) {  // afficher le contenu du fichier
-				fread(&enreg1, sizeof(enregistrement), 1, file1);
+				fread(&enreg, sizeof(enregistrement), 1, file);
+				char nb[12];
+				sprintf(nb, "% 4d", i);
+				char ville[16];
+				sprintf(ville, "% 6s", enreg.ville);
+				char date[12];
+				sprintf(date, "%s", enreg.date);		
+				char temperature[4];
+				sprintf(temperature, "% 3d", enreg.temperature);
+				char str[100] = "+----------------+--------------+--------------+---------------+\n";
+				printf("%s", str);
+				printf("| Enregistrement |    Ville     |     Date     |  Temperature  |\n");
+				printf("%s", str);
+				printf("|      		 |              | 	       | 	       |\n");
+				printf("|     %s       |    %s    |  %s  |      %s      |\n", nb, ville, date, temperature);
+				printf("| 		 |		|     	       |	       |\n");
+				printf("%s", str);
+				i++;
+/*
 				printf("L'enregistremt : %d\n", i++);
-				printf("La ville : %s   ", enreg1.ville);
-				printf("La date :  %s   ",  enreg1.date);
-				printf("La temperature : %i\n", enreg1.temperature);
-				printf("******************\n");
-				ch = fgetc(file1);                                                       
-				fseek(file1, (i - 1) * sizeof(enregistrement) , SEEK_SET);   
+				printf("La ville : %s   ", enreg.ville);
+				printf("La date :  %s   ",  enreg.date);
+				printf("La temperature : %i\n", enreg.temperature);
+				printf("******************************************************************\n");
+*/				
+				ch = fgetc(file);                                                       
+				fseek(file, (i - 1) * sizeof(enregistrement) , SEEK_SET);   
 			}   
-			fclose(file1);
+			fclose(file);
 			break;
 		}
 	}

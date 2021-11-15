@@ -5,16 +5,19 @@
 #define BUFFER_SIZE 128
 
 int main () {
-	FILE *file = fopen("in", "r");
-	
+	char fichier[20];
+	printf("Entrer le nom du fichier : ");
+	scanf("%s", fichier);
+	FILE *file = fopen(fichier, "r"); // ouverture du fichier
+	char word[10];
+	printf("Entrer le mot a rechercher : "); 
+	scanf("%s", word);
+
 	char buffer[BUFFER_SIZE];
-	const char delim[] = " /!@#$%^&*()[]{},'.;:<>?\n\t";
+	const char delim[] = " /!@#$%^&*()[]|{},'.;:<>?\n\\\t";
 	char *str;
 	int count = 0;
 	
-	char word[10];
-	printf("Entrer le mot a rechercher : ");
-	scanf("%s", word);
 
 	if (file == NULL) {
 		perror("Impossible d'ouvrir le fichier\n");

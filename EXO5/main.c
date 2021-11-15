@@ -4,21 +4,18 @@
 #include <stdarg.h>
 
 #define BUFFER_SIZE 128
-
+	
 void coder(char *filename, char *new_filename, char format, int n, char cle[n]) {
-	FILE *file_in = fopen(filename, "rb");
-	FILE *file_out = fopen(new_filename, "w");
-
-	if (file_in == NULL || file_out == NULL) {
-		perror("Impossible d'ouvrir les fichiers.\n");
-		exit(0);
-	}
+	FILE *file_out = fopen(new_filename, "w"); // ouverture du fichier en sortie
 
 	printf("Le codage : \n");
 	switch (format) {
 		// Le cas d'un fichier texte
 		case 't' : {
-			FILE *file_in = fopen(filename, "r");
+			FILE *file_in = fopen(filename, "r");	// ouverture du fichier en mode textuel
+			if (file_in == NULL) {
+				perror("Impossible d'ouvrir "
+			}	
 			char ch = fgetc(file_in);
 			int i = 0;
 			while (ch != EOF) {
@@ -33,7 +30,7 @@ void coder(char *filename, char *new_filename, char format, int n, char cle[n]) 
 		}
 		// Le cas d'un fichier binaire
 		case 'b': {
-			FILE *file_in = fopen(filename, "rb");
+			FILE *file_in = fopen(filename, "rb");	// ouverture du fichier en mode binaire
 			int buffer[n];
 			while (!feof(file_in)) {
 				fread(&buffer, n, 1, file_in);
@@ -92,10 +89,7 @@ void decoder(char *filename, char *new_filename, char format, int n, char cle[n]
 }
 
 int main () {
-	int n;
-	printf("Entrer la taille de la cle : ");	
-	scanf("%d", &n);
-	char cle[n];
+	char cle[20];
 	printf("Entrer la cle : ");	
 	scanf("%s", cle);
 	printf("Entrer l'option que vous voulez : \n");
@@ -105,11 +99,21 @@ int main () {
 	scanf("%d", &opt);
 	switch (opt) {
 		case 1: {
-			coder("in1", "out1", 't', n, cle);	
+   		char fichier1[20], fichier2[20];
+	   	printf("Entrer le nom du fichier a encoder en entree : ");
+		   scanf("%s", fichier);
+	   	printf("Entrer le nom du fichier en sortie : ");
+		   scanf("%s", fichier);		  
+			coder(fichier1, fichier2, 't', n, cle);	
 			break;
 		}
 		case 2: {
-			decoder("out1", "out2", 't', n, cle);		
+	  		char fichier1[20], fichier2[20];
+	   	printf("Entrer le nom du fichier a decoder en entree : ");
+		   scanf("%s", fichier);
+	   	printf("Entrer le nom du fichier en sortie : ");
+		   scanf("%s", fichier);		  
+			decoder(fichier1, fichier2, 't', n, cle);		
 			break;
 		}
 		default:

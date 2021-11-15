@@ -5,23 +5,21 @@
 #ifdef LOCAL
 #define debug(format, ...) { printf("[%s",#__VA_ARGS__);printf("] : ") ; printf(format"\n",__VA_ARGS__);}
 #else
-#define debuf(...) 42
+#define debug(...) 42
 #endif
 
 
 #define BUFFER_SIZE 128
 int main () {
-	FILE *file = fopen("in", "r");                                                                                
-
-	char str[BUFFER_SIZE];                                                                                     
-	const char delim[2] = " ";                                                                                    
-	char *pos;                                                                                                    
+	FILE *file = fopen("in", "r");
+  	
+	char str[BUFFER_SIZE];
+	const char delim[2] = " ";
+	char *pos;
 	int index, count = 0;
-
 	char word[10];
 	printf("Entrer le mot a rechercher : ");
 	scanf("%s", word);
-	
 	while ((fgets(str, BUFFER_SIZE, file)) != NULL) {	// lire ligne par ligne jusqu'a la fin
 		index = 0;
 		while ((pos = strstr(str + index, word)) != NULL) {	// trouver la prochaine occurence du mot str
